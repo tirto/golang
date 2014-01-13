@@ -57,6 +57,7 @@ func handleUserProfile(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(res, string(buf))
 }
 
+// main function
 func main() {
 	http.HandleFunc("/AudService/v1/user/profile", handleUserProfile)
 	log.Fatal(http.ListenAndServe(":8080", nil))
