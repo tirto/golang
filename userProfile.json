@@ -1,0 +1,43 @@
+{
+   "status" : {
+      "code" : 200
+      "description" : "success",
+   },
+   "profile" : {
+      "id" : "abcxyz123",
+      "updated" : 1385405784,
+      "ads" : [
+         "http://adserver1.com/ad1",
+         "http://adserver2.com/ad2"
+      ],
+      "interests" : [
+         "sports",
+         "music"
+      ],
+      "categories" : [
+         "arts & entertainment > all",
+         "style & fashion > clothing"
+      ],
+      "clicked ads" : [
+         "http://clickedadserver1.com/ad1"
+      ],
+      "tags" : {
+         "key2" : "val2",
+         "key1" : "val1"
+      },
+      "keywords" : [
+         "foo",
+         "bar"
+      ],
+      "pages" : [
+         {
+            "url" : "http://url1.com/page1",
+            "title" : "Kompas.com - Rayakan Perbedaan"
+         },
+         {
+            "url" : "http://url2.com/page2",
+            "title" : "detikcom : situs warta era digital"
+         }
+      ]
+   }
+}
