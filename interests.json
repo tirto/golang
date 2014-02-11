@@ -1,0 +1,20 @@
+{
+   "status" : {
+      "code" : 200
+      "description" : "success",
+   },
+   "interests" : [
+      "sports",
+      "music",
+      "jazz",
+      "rock",
+      "karate",
+      "grappling",
+      "bowling",
+      "swimming",
+      "running",
+      "exercise",
+      "movies",
+      "tae-kwon do"
+    ]
+}

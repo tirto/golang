@@ -9,7 +9,7 @@ import (
 )
 
 type userProfileLookupReq struct {
-    Api_key string
+    ApiKey string
     Verbose bool
     Lookup_by struct {
         Interests struct {
@@ -25,6 +25,10 @@ type userProfileLookupReq struct {
             Tag map[string]string
         }
     }
+}
+
+type interestsReq struct {
+    ApiKey string
 }
 
 type userProfileReq struct {
@@ -48,14 +52,14 @@ func handleUserProfileLookup(res http.ResponseWriter, req *http.Request) {
         return
     }
 
-    api_key := u.Api_key
+    apiKey := u.ApiKey
     verbose := u.Verbose
     lookup_by := u.Lookup_by
     interests := lookup_by.Interests
     categories := lookup_by.Categories
     tags := lookup_by.Tags
     keywords := lookup_by.Keywords
-    log.Println("api_key = ",api_key)
+    log.Println("apiKey = ",apiKey)
     log.Println("verbose = ",verbose)
     log.Println("lookup_by = ",lookup_by)
     log.Println("interests=", interests)
@@ -63,16 +67,14 @@ func handleUserProfileLookup(res http.ResponseWriter, req *http.Request) {
     log.Println("tags=", tags)
     log.Println("keywords=", keywords)
 
-
-
     // no input errors
     filename := "/home/tirto/go/src/github.com/tirto/webserver/userProfileLookup.json"
     if verbose {
         filename = "/home/tirto/go/src/github.com/tirto/webserver/userProfileLookupVerbose.json"
     }
 
-    // TODO: implement isApiKeyValid(api_key)
-    if api_key != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
+    // TODO: implement isApiKeyValid(apiKey)
+    if apiKey != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
         errorDesc := "Error: invalid apiKey"
         printError(errorDesc, res)
         return
@@ -87,6 +89,39 @@ func handleUserProfileLookup(res http.ResponseWriter, req *http.Request) {
     fmt.Fprintf(res, string(buf))
 }
 
+func handleInterests(res http.ResponseWriter, req *http.Request) {
+    log.Println("start handleInterests")
+    decoder := json.NewDecoder(req.Body)
+    var u interestsReq
+    err := decoder.Decode(&u)
+    if err != nil {
+        log.Println(err.Error())
+        errorDesc := "Error: unable to parse request"
+        printError(errorDesc, res)
+        return
+    }
+
+    log.Println("apiKey =", u.ApiKey)
+    apiKey := u.ApiKey
+    // TODO: implement isApiKeyValid(apiKey)
+    if apiKey != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
+        errorDesc := "Error: invalid apiKey"
+        printError(errorDesc, res)
+        return
+    }
+
+    // TODO: implement getInterests()
+    // no input errors
+    buf, err := ioutil.ReadFile("/home/tirto/go/src/github.com/tirto/webserver/interests.json")
+    if err != nil {
+        errorDesc := "Error: unable to lookup interests"
+        printError(errorDesc, res)
+        return
+    }
+    fmt.Fprintf(res, string(buf))
+}
+
+
 func handleUserProfile(res http.ResponseWriter, req *http.Request) {
     decoder := json.NewDecoder(req.Body)
     var u userProfileReq
@@ -98,12 +133,12 @@ func handleUserProfile(res http.ResponseWriter, req *http.Request) {
         return
     }
 
-    log.Println("api_key =", u.Api_key)
+    log.Println("apiKey =", u.ApiKey)
     log.Println("id =", u.Id)
-    api_key := u.Api_key
+    apiKey := u.ApiKey
     id := u.Id
-    // TODO: implement isApiKeyValid(api_key)
-    if api_key != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
+    // TODO: implement isApiKeyValid(apiKey)
+    if apiKey != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
         errorDesc := "Error: invalid apiKey"
         printError(errorDesc, res)
         return
@@ -130,5 +165,6 @@ func handleUserProfile(res http.ResponseWriter, req *http.Request) {
 func main() {
     http.HandleFunc("/AudService/v1/user/profile", handleUserProfile)
     http.HandleFunc("/AudService/v1/user/profile/lookup", handleUserProfileLookup)
+    http.HandleFunc("/AudService/v1/interests", handleInterests)
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
