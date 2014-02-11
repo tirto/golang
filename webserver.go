@@ -9,7 +9,7 @@ import (
 )
 
 type userProfileLookupReq struct {
-    ApiKey string
+    Api_key string
     Verbose bool
     Lookup_by struct {
         Interests struct {
@@ -48,14 +48,14 @@ func handleUserProfileLookup(res http.ResponseWriter, req *http.Request) {
         return
     }
 
-    apiKey := u.ApiKey
+    api_key := u.Api_key
     verbose := u.Verbose
     lookup_by := u.Lookup_by
     interests := lookup_by.Interests
     categories := lookup_by.Categories
     tags := lookup_by.Tags
     keywords := lookup_by.Keywords
-    log.Println("apiKey = ",apiKey)
+    log.Println("api_key = ",api_key)
     log.Println("verbose = ",verbose)
     log.Println("lookup_by = ",lookup_by)
     log.Println("interests=", interests)
@@ -71,8 +71,8 @@ func handleUserProfileLookup(res http.ResponseWriter, req *http.Request) {
         filename = "/home/tirto/go/src/github.com/tirto/webserver/userProfileLookupVerbose.json"
     }
 
-    // TODO: implement isApiKeyValid(apiKey)
-    if apiKey != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
+    // TODO: implement isApiKeyValid(api_key)
+    if api_key != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
         errorDesc := "Error: invalid apiKey"
         printError(errorDesc, res)
         return
@@ -98,12 +98,12 @@ func handleUserProfile(res http.ResponseWriter, req *http.Request) {
         return
     }
 
-    log.Println("apiKey =", u.ApiKey)
+    log.Println("api_key =", u.Api_key)
     log.Println("id =", u.Id)
-    apiKey := u.ApiKey
+    api_key := u.Api_key
     id := u.Id
-    // TODO: implement isApiKeyValid(apiKey)
-    if apiKey != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
+    // TODO: implement isApiKeyValid(api_key)
+    if api_key != "dd06058e-f32a-4e11-b14b-85a2f98ea523" {
         errorDesc := "Error: invalid apiKey"
         printError(errorDesc, res)
         return
